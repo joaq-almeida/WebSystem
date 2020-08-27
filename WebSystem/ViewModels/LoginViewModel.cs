@@ -8,11 +8,13 @@ namespace WebSystem.ViewModels
 {
     public class LoginViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Email é obrigátorio")]
+        [EmailAddress(ErrorMessage = "Email inválido")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "A senha é obrigatória")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        [Display(Name = "Lembrar-me")]
+        public bool RemenberMe { get; set; }
     }
 }
