@@ -11,6 +11,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebSystem.Infra;
+using WebSystem.Services.Contracts;
+using WebSystem.Services;
+using WebSystem.Repository.Contracts;
+using WebSystem.Repository;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace WebSystem
 {
@@ -32,9 +38,26 @@ namespace WebSystem
                 //opt.UseInMemoryDatabase("InMemoryDB");
                 opt.UseSqlServer(Configuration.GetConnectionString("WebSystemBD"));
             });
+
+            //Aqui e adicionado a logica para sempre ser redirecionado
+            //sempre para a pagina de login
+            services.AddControllersWithViews(opt => {
+
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                opt.Filters.Add(new AuthorizeFilter(policy));
+            });
+
             services.AddControllersWithViews();
+            services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<ITicketService, TicketService>();
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
+
+            //services.AddMvc().AddRazorPagesOptions(opt => {
+            //    opt.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "/Account/Login");
+            //}).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +86,7 @@ namespace WebSystem
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{Controller=Home}/{action=Index}/{id?}");
             });
         }
     }

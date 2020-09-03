@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebSystem.Models
+namespace WebSystem.Services.Contracts
 {
-    public enum Category: int
+    public interface ITicketService
     {
-        Bug = 0,
-        Doubt = 1,
-        Requisition = 2
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using WebSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebSystem.Controllers
 {
@@ -19,13 +20,22 @@ namespace WebSystem.Controllers
             this.signInManager = signInManager;
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
+            //if (Url.IsLocalUrl(returnUrl))
+            //{
+            //    return Redirect(returnUrl);
+            //}
+            //else
+            //{
+            //    return RedirectToAction("index", "home");
+            //}
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> login(LoginViewModel model)
         {
