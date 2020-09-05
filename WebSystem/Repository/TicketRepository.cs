@@ -39,6 +39,7 @@ namespace WebSystem.Repository
                 handler.ModifiedById = ticket.ModifiedById;
                 handler.Modified = DateTime.Now;
                 _context.tickets.Update(handler);
+                _context.SaveChanges();
             }
         }
 
