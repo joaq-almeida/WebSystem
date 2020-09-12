@@ -5,16 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebSystem.Repository.Contracts;
 using WebSystem.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebSystem.Controllers
 {
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _category;
-
-        public CategoryController(ICategoryRepository category)
+        private readonly UserManager<IdentityUser>  _userManager;
+        public CategoryController(ICategoryRepository category, UserManager<IdentityUser> userManager)
         {
             _category = category;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -36,16 +38,20 @@ namespace WebSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = _userManager.GetUserId(User);
+                category.CreatedById = userId;
+                category.ModifiedById = userId;
                 _category.Add(category);
-                return RedirectToAction("Category", "Index");
+                return RedirectToAction("Index", "Category");
             }
 
             return View(category);
         }
 
-        public IActionResult Update()
+        public IActionResult Update(int id)
         {
-            return View();
+            var category = _category.GetByID(id);
+            return View(category);
         }
 
         [HttpPost]
@@ -53,8 +59,10 @@ namespace WebSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = _userManager.GetUserId(User);
+                category.ModifiedById = userId;
                 _category.Update(category);
-                RedirectToAction("Category", "Index");
+                RedirectToAction("Index", "Category");
             }
 
             return View(category);
@@ -63,7 +71,7 @@ namespace WebSystem.Controllers
         public IActionResult Delete(int id)
         {
             _category.Delete(id);
-            return RedirectToAction("Category", "Index");
+            return RedirectToAction("Index", "Category");
         }
     }
 }
