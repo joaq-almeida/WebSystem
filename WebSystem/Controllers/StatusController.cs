@@ -5,21 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebSystem.Models;
 using WebSystem.Repository.Contracts;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebSystem.Controllers
 {
     public class StatusController: Controller
     {
         private readonly IStatusRepository _status;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public StatusController(IStatusRepository status)
+        public StatusController(IStatusRepository status, UserManager<IdentityUser> userManager)
         {
             _status = status;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var status = _status.GetAll();
+            return View(status);
         }
 
         public IActionResult Create()
@@ -32,14 +36,17 @@ namespace WebSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = _userManager.GetUserId(User);
+                status.CreatedById = userId;
+                status.ModifiedById = userId;
                 _status.Add(status);
-                return RedirectToAction("Status", "Index");
+                return RedirectToAction("Index", "Status");
             }
 
             return View(status);
         }
 
-        public IActionResult Update()
+        public IActionResult Update(int id)
         {
             return View();
         }
@@ -49,8 +56,10 @@ namespace WebSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = _userManager.GetUserId(User);
+                status.ModifiedById = userId;
                 _status.Update(status);
-                RedirectToAction("Status", "Index");
+                RedirectToAction("Index", "Status");
             }
 
             return View(status);
@@ -59,7 +68,7 @@ namespace WebSystem.Controllers
         public IActionResult Delete(int id)
         {
             _status.Delete(id);
-            return RedirectToAction("Status", "Index");
+            return RedirectToAction("Index", "Status");
         }
     }
 }
