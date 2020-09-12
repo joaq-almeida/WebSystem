@@ -15,8 +15,8 @@ namespace WebSystem.Infra
         public AppDbContext() { }
 
         public DbSet<Ticket> tickets { get; set; }
-        public DbSet<Category> categories { get; set; }
-        public DbSet<Status> statuses { get; set; }
+        public DbSet<Category> category { get; set; }
+        public DbSet<Status> status { get; set; }
         public DbSet<Priority> priorities { get; set; }
     }
 }

@@ -21,32 +21,32 @@ namespace WebSystem.Repository
         {
             status.Created = DateTime.Now;
             status.Modified = DateTime.Now;
-            _context.Add(status);
+            _context.status.Add(status);
             _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var handler = _context.statuses.SingleOrDefault(x => x.ID == id);
+            var handler = _context.status.SingleOrDefault(x => x.ID == id);
             if (handler != null)
             {
-                _context.statuses.Remove(handler);
+                _context.status.Remove(handler);
                 _context.SaveChanges();
             }
         }
 
-        public List<Status> GetAll() => _context.statuses.ToList();
+        public List<Status> GetAll() => _context.status.ToList();
 
-        public Status GetByID(int id) => _context.statuses.SingleOrDefault(x => x.ID == id);
+        public Status GetByID(int id) => _context.status.SingleOrDefault(x => x.ID == id);
 
         public void Update(Status status)
         {
-            var handler = _context.statuses.SingleOrDefault(x => x.ID == status.ID);
+            var handler = _context.status.SingleOrDefault(x => x.ID == status.ID);
             if (handler != null)
             {
                 handler.Name = status.Name;
                 handler.Modified = DateTime.Now;
-                _context.statuses.Update(handler);
+                _context.status.Update(handler);
                 _context.SaveChanges();
             }
         }

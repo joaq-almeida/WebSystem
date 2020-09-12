@@ -19,7 +19,11 @@ namespace WebSystem.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var categories = _category.GetAll();
+            if (categories != null)
+                return View(categories);
+            else
+                return View();
         }
 
         public IActionResult Create()

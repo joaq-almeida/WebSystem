@@ -21,32 +21,32 @@ namespace WebSystem.Repository
         {
             category.Created = DateTime.Now;
             category.Modified = DateTime.Now;
-            _context.categories.Add(category);
+            _context.category.Add(category);
             _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var handler = _context.categories.SingleOrDefault(x => x.ID == id);
+            var handler = _context.category.SingleOrDefault(x => x.ID == id);
             if (handler != null)
             {
-                _context.categories.Remove(handler);
+                _context.category.Remove(handler);
                 _context.SaveChanges();
             }
         }
 
-        public List<Category> GetAll() => _context.categories.ToList();
+        public List<Category> GetAll() => _context.category.ToList();
 
-        public Category GetByID(int id) => _context.categories.SingleOrDefault(x => x.ID == id);
+        public Category GetByID(int id) => _context.category.SingleOrDefault(x => x.ID == id);
 
         public void Update(Category category)
         {
-            var handler = _context.categories.SingleOrDefault(x => x.ID == category.ID);
+            var handler = _context.category.SingleOrDefault(x => x.ID == category.ID);
             if (handler != null)
             {
                 handler.Name = category.Name;
                 handler.Modified = DateTime.Now;
-                _context.categories.Update(handler);
+                _context.category.Update(handler);
                 _context.SaveChanges();
             }
         }

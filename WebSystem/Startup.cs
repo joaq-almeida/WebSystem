@@ -50,6 +50,9 @@ namespace WebSystem
             });
 
             services.AddControllersWithViews();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IPriorityRepository, PriorityRepository>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ITicketService, TicketService>();
             services.AddIdentity<IdentityUser, IdentityRole>()
