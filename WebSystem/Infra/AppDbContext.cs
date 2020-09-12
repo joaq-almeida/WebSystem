@@ -17,6 +17,6 @@ namespace WebSystem.Infra
         public DbSet<Ticket> tickets { get; set; }
         public DbSet<Category> category { get; set; }
         public DbSet<Status> status { get; set; }
-        public DbSet<Priority> priorities { get; set; }
+        public DbSet<Priority> priority { get; set; }
     }
 }
