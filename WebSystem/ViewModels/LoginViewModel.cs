@@ -12,6 +12,7 @@ namespace WebSystem.ViewModels
         [EmailAddress(ErrorMessage = "Email inválido")]
         public string Email { get; set; }
         [Required(ErrorMessage = "A senha é obrigatória")]
+        [Display(Name = "Senha")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Display(Name = "Lembrar-me")]

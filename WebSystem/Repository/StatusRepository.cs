@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebSystem.Repository.Contracts;
 using WebSystem.Infra;
 using WebSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebSystem.Repository
 { 
@@ -35,7 +36,7 @@ namespace WebSystem.Repository
             }
         }
 
-        public List<Status> GetAll() => _context.status.ToList();
+        public List<Status> GetAll() => _context.status.Include(x => x.CreatedBy).ToList();
 
         public Status GetByID(int id) => _context.status.SingleOrDefault(x => x.ID == id);
 

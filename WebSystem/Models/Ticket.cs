@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebSystem.Models
 {
@@ -15,8 +16,10 @@ namespace WebSystem.Models
         public Priority Priority { get; set; }
         public Status Status { get; set; }
         public int CreatedById { get; set; }
+        public virtual IdentityUser CreatedBy { get; set; }
         public DateTime Created { get; set; }
         public int ModifiedById { get; set; }
+        public virtual IdentityUser ModifiedBy { get; set; }
         public DateTime Modified { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +15,7 @@ namespace WebSystem.Models
         public string CreatedById { get; set; }
         public virtual IdentityUser CreatedBy { get; set; }
         public DateTime Modified { get; set; }
-        public virtual IdentityUser ModifiedBy { get; set; }
         public string ModifiedById { get; set; }
+        public virtual IdentityUser ModifiedBy { get; set; }
     }
 }

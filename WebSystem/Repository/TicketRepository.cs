@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebSystem.Models;
 using WebSystem.Repository.Contracts;
 using WebSystem.Infra;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebSystem.Repository
 {
@@ -53,7 +54,7 @@ namespace WebSystem.Repository
             }
         }
 
-        public List<Ticket> GetAll() => _context.tickets.ToList();
+        public List<Ticket> GetAll() => _context.tickets.Include(x => x.CreatedById).ToList();
 
         public Ticket GetByID(int id) => _context.tickets.SingleOrDefault(x => x.ID == id);
     }

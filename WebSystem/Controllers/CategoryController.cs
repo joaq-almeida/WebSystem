@@ -62,7 +62,7 @@ namespace WebSystem.Controllers
                 var userId = _userManager.GetUserId(User);
                 category.ModifiedById = userId;
                 _category.Update(category);
-                RedirectToAction("Index", "Category");
+                return RedirectToAction("Index", "Category");
             }
 
             return View(category);

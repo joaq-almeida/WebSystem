@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebSystem.Repository.Contracts;
 using WebSystem.Infra;
 using WebSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebSystem.Repository
 {
@@ -35,7 +36,7 @@ namespace WebSystem.Repository
             }
         }
 
-        public List<Category> GetAll() => _context.category.ToList();
+        public List<Category> GetAll() => _context.category.Include(x => x.CreatedBy).ToList();
 
         public Category GetByID(int id) => _context.category.SingleOrDefault(x => x.ID == id);
 
